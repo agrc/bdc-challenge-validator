@@ -1,7 +1,7 @@
 # UGRC Python Starter Tempalate
 
 ![Build Status](https://github.com/agrc/bdc-challenge-validator/workflows/Build%20and%20Test/badge.svg)
-[![codecov](https://codecov.io/gh/agrc/bdc-challenge-validator/branch/main/graph/badge.svg)](https://codecov.io/gh/agrc/python)
+[![codecov](https://codecov.io/gh/agrc/bdc-challenge-validator/branch/main/graph/badge.svg)](https://codecov.io/gh/agrc/bdc-challenge-validator)
 
 UGRC's default Python project configuration/template
 
