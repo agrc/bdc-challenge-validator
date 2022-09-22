@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # * coding: utf8 *
 """
-test_projectname.py
+test_validator.py
 A module that contains tests for the project module.
 """
 
-from projectname import main
+from validator import main
 
 
 def test_hello_returns_hi():

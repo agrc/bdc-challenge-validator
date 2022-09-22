@@ -11,17 +11,17 @@ from setuptools import find_packages, setup
 
 #: Load version from source file
 version = {}
-with open('src/projectname/version.py') as fp:
+with open('src/validator/version.py') as fp:
     exec(fp.read(), version)
 
 setup(
-    name='projectname',
+    name='ugrc-bdc-challenge-validator',
     version=version['__version__'],
     license='MIT',
     description='Project description.',
     author='UGRC',
     author_email='ugrc@utah.gov',
-    url='https://github.com/agrc/python',
+    url='https://github.com/agrc/bdc-challenge-validator',
     packages=find_packages('src'),
     package_dir={'': 'src'},
     py_modules=[splitext(basename(path))[0] for path in glob('src/*.py')],
@@ -57,6 +57,6 @@ setup(
         'pytest-runner',
     ],
     entry_points={'console_scripts': [
-        'projectname = projectname.main:main',
+        'validator = validator.main:main',
     ]},
 )
