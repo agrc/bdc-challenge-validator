@@ -32,11 +32,17 @@ def column_name_check(dataframe):
     return (matched_names, missing_good_names, extra_dataframe_names)
 
 
-def category_code_check(row):
-    cat_code = row['category_code']
-    if cat_code < 1 or cat_code > 7:
-        return 'Invalid category_code'
-    return 'Valid'
+def category_code_check(dataframe):
+
+    try:
+        dataframe['category_code'] = dataframe['category_code'].astype('int64')
+    except ValueError:
+        return None, 'Non-integer, non-numeric or empty category_code values present'
+
+    if not dataframe['category_code'].between(1, 7).all():
+        return None, 'One or more category codes were not between 1 and 7.'
+
+    return dataframe, 'Valid'
 
 
 def location_id_check(row):
