@@ -2,6 +2,23 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Python: Current File",
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "Python: pip installed module",
+      "type": "python",
+      "request": "launch",
+      "module": "validator.main",
+      // "program": "validator",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
       "name": "Debug Tests",
       "type": "python",
       "request": "test",

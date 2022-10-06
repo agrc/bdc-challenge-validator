@@ -1,21 +1,91 @@
 import pandas as pd
+from pandas import testing as tm
 
 from validator import checks
 
+# def test_category_codes():
 
-def test_category_codes():
+#     rows = [{'category_code': foo} for foo in range(0, 9)]
 
-    rows = [{'category_code': foo} for foo in range(0, 9)]
+#     output = []
+#     for row in rows:
+#         output.append(checks.category_code_check(row))
 
-    output = []
-    for row in rows:
-        output.append(checks.category_code_check(row))
+#     test_output = [
+#         'Invalid category_code', 'Valid', 'Valid', 'Valid', 'Valid', 'Valid', 'Valid', 'Valid', 'Invalid category_code'
+#     ]
 
-    test_output = [
-        'Invalid category_code', 'Valid', 'Valid', 'Valid', 'Valid', 'Valid', 'Valid', 'Valid', 'Invalid category_code'
-    ]
+#     assert output == test_output
 
-    assert output == test_output
+
+def test_category_code_check_casts_to_int():
+    df = pd.DataFrame({
+        'category_code': ['1', '2', '3', '4', '5', '6', '7'],
+    })
+
+    dataframe, result = checks.category_code_check(df)
+
+    test_df = pd.DataFrame({
+        'category_code': [1, 2, 3, 4, 5, 6, 7],
+    })
+
+    assert result == 'Valid'
+    tm.assert_frame_equal(dataframe, test_df)
+
+
+def test_category_code_check_str_in_df():
+    df = pd.DataFrame({
+        'category_code': ['1', '2', '3', '4', '5', '6', 'foo'],
+    })
+
+    dataframe, result = checks.category_code_check(df)
+
+    assert not dataframe
+    assert result == 'Non-integer, non-numeric or empty category_code values present'
+
+
+def test_category_code_check_empty_str_in_df():
+    df = pd.DataFrame({
+        'category_code': ['1', '2', '3', '4', '5', '6', ''],
+    })
+
+    dataframe, result = checks.category_code_check(df)
+
+    assert not dataframe
+    assert result == 'Non-integer, non-numeric or empty category_code values present'
+
+
+def test_category_code_check_float_in_df():
+    df = pd.DataFrame({
+        'category_code': ['1', '2', '3', '4', '5', '6', '7.0'],
+    })
+
+    dataframe, result = checks.category_code_check(df)
+
+    assert not dataframe
+    assert result == 'Non-integer, non-numeric or empty category_code values present'
+
+
+def test_category_code_check_value_under_range():
+    df = pd.DataFrame({
+        'category_code': ['1', '2', '3', '4', '5', '6', '0'],
+    })
+
+    dataframe, result = checks.category_code_check(df)
+
+    assert not dataframe
+    assert result == 'One or more category codes were not between 1 and 7.'
+
+
+def test_category_code_check_value_over_range():
+    df = pd.DataFrame({
+        'category_code': ['1', '2', '3', '4', '5', '6', '10'],
+    })
+
+    dataframe, result = checks.category_code_check(df)
+
+    assert not dataframe
+    assert result == 'One or more category codes were not between 1 and 7.'
 
 
 def test_location_id_check_format():
