@@ -23,6 +23,18 @@ def _all_elements_equal(dataframe, value):
     return (value == a).all(0).all()
 
 
+def _move_result_columns(dataframe: pd.DataFrame) -> pd.DataFrame:
+    new_columns = []
+    existing_columns = list(dataframe.columns)
+    for column in existing_columns:
+        new_columns.append(column)
+        if f'{column}_result' in existing_columns:
+            new_columns.append(f'{column}_result')
+            existing_columns.remove(f'{column}_result')
+
+    return dataframe.reindex(columns=new_columns)
+
+
 def process(csv_path):
     dataframe = pd.read_csv(csv_path, dtype=str)
 
@@ -78,8 +90,12 @@ def process(csv_path):
         csv_path = Path(csv_path)
         new_path = csv_path.parent / f'{csv_path.stem}_results.csv'
         print(f'Errors detected. Results written to {new_path}')
-        combined_dataframe = dataframe.join(results_df)
+        combined_dataframe = _move_result_columns(dataframe.join(results_df))
         combined_dataframe.to_csv(new_path)
+        return
+
+    _print_header('All checks completed, file is valid')
+    return
 
 
 def main():
