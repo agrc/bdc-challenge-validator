@@ -1,13 +1,15 @@
 #!/usr/bin/env python
 # * coding: utf8 *
 """
-a description of what this module does.
-this file is for testing linting...
+A quick module for checking whether a csv, shapefile, or feature class conforms to the FCC's Broadband Data Collection
+Bulk Data Challenge format.
 """
 
+import sys
 from pathlib import Path
 
 import pandas as pd
+from arcgis import GeoAccessor, GeoSeriesAccessor
 
 from . import checks
 
@@ -18,9 +20,34 @@ def _print_header(message):
     print('-' * 40)
 
 
+def _load_data(input_path):
+    # input_path = Path(fr'{input_path}')
+
+    try:
+        if input_path.suffix == '.csv':
+            return pd.read_csv(input_path, dtype=str)
+        if input_path.suffix == '.shp' or input_path.parts[-2][-4:] == '.gdb':
+            return pd.DataFrame.spatial.from_featureclass(input_path)
+    except (OSError, KeyError, FileNotFoundError):
+        print(f'Could not open {input_path}. Please check the filename and try again.')
+
+    #: If we don't get a csv, shapefile, or featureclass, print a notice and return None
+    print('CSV, Shapefile, or Feature Class required. Please check your input path and try again.')
+    return None
+
+
 def _all_elements_equal(dataframe, value):
     a = dataframe.to_numpy()
     return (value == a).all(0).all()
+
+
+def _write_results_dataframe(input_path, combined_dataframe):
+    parent = input_path.parent
+    if input_path.parent.suffix == '.gdb':
+        parent = input_path.parent.parent
+    new_path = parent / f'{input_path.stem}_results.csv'
+    print(f'Errors detected. Results written to {new_path}')
+    combined_dataframe.to_csv(new_path)
 
 
 def _move_result_columns(dataframe: pd.DataFrame) -> pd.DataFrame:
@@ -35,8 +62,14 @@ def _move_result_columns(dataframe: pd.DataFrame) -> pd.DataFrame:
     return dataframe.reindex(columns=new_columns)
 
 
-def process(csv_path):
-    dataframe = pd.read_csv(csv_path, dtype=str)
+def process(input_path):
+
+    input_path = Path(input_path)
+
+    _print_header(f'Reading in {input_path}')
+    dataframe = _load_data(input_path)
+    if dataframe is None:
+        return
 
     _print_header('Checking column names')
     matching_cols, missing_cols, extra_cols = checks.column_name_check(dataframe)
@@ -86,12 +119,11 @@ def process(csv_path):
         print(f'{column}...')
         exec(f'results_df[\'{column}_result\'] = dataframe.apply(checks.{column}_check, axis=1)')
 
+    _print_header('Results')
+
     if not _all_elements_equal(results_df, 'Valid'):
-        csv_path = Path(csv_path)
-        new_path = csv_path.parent / f'{csv_path.stem}_results.csv'
-        print(f'Errors detected. Results written to {new_path}')
         combined_dataframe = _move_result_columns(dataframe.join(results_df))
-        combined_dataframe.to_csv(new_path)
+        _write_results_dataframe(input_path, combined_dataframe)
         return
 
     _print_header('All checks completed, file is valid')
@@ -99,9 +131,15 @@ def process(csv_path):
 
 
 def main():
-    process(r'C:\gis\Projects\BroadbandFabric\working data\Wayne\wayne_bad_category_codes.csv')
+    print(sys.argv)
+    if len(sys.argv) == 1:
+        print('Must specify the path to the file to be validated.')
+        sys.exit()
+    if len(sys.argv) > 2:
+        print('Only one file may be specified (check for unescaped spaces in path).')
+        sys.exit()
+    process(sys.argv[1])
 
 
 if __name__ == '__main__':
-    #: the code that executes if you run the file or module directly
-    process(r'C:\gis\Projects\BroadbandFabric\working data\Wayne\wayne_bad_category_codes.csv')
+    main()
