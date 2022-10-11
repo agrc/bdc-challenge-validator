@@ -25,14 +25,17 @@ def _load_data(input_path):
 
     try:
         if input_path.suffix == '.csv':
-            return pd.read_csv(input_path, dtype=str)
+            return pd.read_csv(input_path, dtype=str).fillna('')
         if input_path.suffix == '.shp' or input_path.parts[-2][-4:] == '.gdb':
-            return pd.DataFrame.spatial.from_featureclass(input_path)
+            raise NotImplementedError('Shapefile and feature class reading not yet implemented')
+            #: TODO: handle converting everything to strings, handling empty values, etc from spatial dfs
+            # return pd.DataFrame.spatial.from_featureclass(input_path).fillna('')
     except (OSError, KeyError, FileNotFoundError):
         print(f'Could not open {input_path}. Please check the filename and try again.')
 
     #: If we don't get a csv, shapefile, or featureclass, print a notice and return None
-    print('CSV, Shapefile, or Feature Class required. Please check your input path and try again.')
+    # print('CSV, Shapefile, or Feature Class required. Please check your input path and try again.')
+    print('CSV required. Please check your input path and try again.')
     return None
 
 
