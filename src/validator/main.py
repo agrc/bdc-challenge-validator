@@ -44,15 +44,6 @@ def _all_elements_equal(dataframe, value):
     return (value == a).all(0).all()
 
 
-def _write_results_dataframe(input_path, combined_dataframe):
-    parent = input_path.parent
-    if input_path.parent.suffix == '.gdb':
-        parent = input_path.parent.parent
-    new_path = parent / f'{input_path.stem}_validator_results.csv'
-    print(f'Errors detected. Results written to {new_path}')
-    combined_dataframe.to_csv(new_path)
-
-
 def _move_result_columns(dataframe: pd.DataFrame) -> pd.DataFrame:
     new_columns = []
     existing_columns = list(dataframe.columns)
@@ -63,6 +54,15 @@ def _move_result_columns(dataframe: pd.DataFrame) -> pd.DataFrame:
             existing_columns.remove(f'{column}_result')
 
     return dataframe.reindex(columns=new_columns)
+
+
+def _write_results_dataframe(input_path, combined_dataframe):
+    parent = input_path.parent
+    if input_path.parent.suffix == '.gdb':
+        parent = input_path.parent.parent
+    new_path = parent / f'{input_path.stem}_validator_results.csv'
+    print(f'Errors detected. Results written to {new_path}')
+    combined_dataframe.to_csv(new_path)
 
 
 def process(input_path):
@@ -103,6 +103,9 @@ def process(input_path):
 
     _print_header('Checking other columns')
     columns_to_check = [
+        'contact_name',
+        'contact_email',
+        'contact_phone',
         'location_id',
         'address_primary',
         'city',

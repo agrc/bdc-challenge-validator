@@ -7,8 +7,6 @@ A program for validating files prior to submission to the FCC's bulk data challe
 
 Requires ArcGIS Pro (unless you're familiar with conda environments).
 
-Note: It does not check the name, email, and phone number columns but assumes these are correct or easy to validate manually.
-
 ## Installation
 
 1. Open the command prompt installed alongside ArcGIS Pro

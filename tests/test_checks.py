@@ -88,6 +88,78 @@ def test_category_code_check_value_over_range():
     assert result == 'One or more category codes were not between 1 and 7.'
 
 
+def test_contact_name_check():
+    # yapf: disable
+    rows = [
+        {'contact_name': ''},
+        {'contact_name': 'Foo Bar'},
+    ]
+    # yapf: enable
+
+    output = []
+    for row in rows:
+        output.append(checks.contact_name_check(row))
+
+    test_output = [
+        'contact_name must include the name of the person preparing the challenge',
+        'Valid',
+    ]
+
+    assert output == test_output
+
+
+def test_contact_email_check():
+    # yapf: disable
+    rows = [
+        {'contact_email': ''},
+        {'contact_email': 'missing_at_foo.com'},
+        {'contact_email': 'missing@thedot'},
+        {'contact_email': 'missing_at_foo.com'},
+        {'contact_email': 'missingafter@'},
+        {'contact_email': 'valid@foo.com'},
+    ]
+    # yapf: enable
+
+    output = []
+    for row in rows:
+        output.append(checks.contact_email_check(row))
+
+    test_output = [
+        'contact_email must be included and have the form someone@somewhere.sometld',
+        'contact_email must be included and have the form someone@somewhere.sometld',
+        'contact_email must be included and have the form someone@somewhere.sometld',
+        'contact_email must be included and have the form someone@somewhere.sometld',
+        'contact_email must be included and have the form someone@somewhere.sometld',
+        'Valid',
+    ]
+
+    assert output == test_output
+
+
+def test_contact_phone_check():
+    # yapf: disable
+    rows = [
+        {'contact_phone': '111-222-3333'},
+        {'contact_phone': '1112223333'},
+        {'contact_phone': '(111) 222-3333'},
+        {'contact_phone': '111-222-333'},
+    ]
+    # yapf: enable
+
+    output = []
+    for row in rows:
+        output.append(checks.contact_phone_check(row))
+
+    test_output = [
+        'Valid',
+        'contact_phone must be in format xxx-yyy-zzzz',
+        'contact_phone must be in format xxx-yyy-zzzz',
+        'contact_phone must be in format xxx-yyy-zzzz',
+    ]
+
+    assert output == test_output
+
+
 def test_location_id_check_format():
     # yapf: disable
     rows = [
