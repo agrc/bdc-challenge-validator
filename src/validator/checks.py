@@ -45,13 +45,31 @@ def category_code_check(dataframe):
     return dataframe, 'Valid'
 
 
+def contact_name_check(row):
+    if not row['contact_name']:
+        return 'contact_name must include the name of the person preparing the challenge'
+    return 'Valid'
+
+
+def contact_email_check(row):
+    if not re.match(r'[^@]+@[^@]+\.[^@]+', row['contact_email']):
+        return 'contact_email must be included and have the form someone@somewhere.sometld'
+    return 'Valid'
+
+
+def contact_phone_check(row):
+    if row['contact_phone'] and not re.search('^[0-9]{3}-[0-9]{3}-[0-9]{4}$', row['contact_phone']):
+        return 'contact_phone must be in format xxx-yyy-zzzz'
+    return 'Valid'
+
+
 def location_id_check(row):
     #: need to make sure we clean up any blank/empty strings in 'location_id'first.
     #: '<Null>'s may need to be cleaned up as well.
     #: need to make sure this is loaded as a string
 
     if row['location_id']:
-        if not re.search('[0-9]{10}', row['location_id']):
+        if not re.search('^[0-9]{10}$', row['location_id']):
             return 'location_id must be a 10-digit number'
 
         if row['category_code'] == 1:
