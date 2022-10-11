@@ -14,7 +14,17 @@
       "type": "python",
       "request": "launch",
       "module": "validator.main",
-      // "program": "validator",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "Python: validator args",
+      "type": "python",
+      "request": "launch",
+      "module": "validator.main",
+      "args": [
+        "C:\\gis\\Projects\\BroadbandFabric\\working data\\Wayne\\wayne_bad_category_codes.csv"
+      ],
       "console": "integratedTerminal",
       "justMyCode": true
     },
