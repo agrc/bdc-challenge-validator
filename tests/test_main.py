@@ -64,7 +64,7 @@ def test_write_results_dataframe_builds_path_input_csv(mocker):
     input_path = Path(r'c:\foo\bar\baz.csv')
     main._write_results_dataframe(input_path, mock_df)
 
-    mock_df.to_csv.assert_called_with(Path(r'c:\foo\bar\baz_results.csv'))
+    mock_df.to_csv.assert_called_with(Path(r'c:\foo\bar\baz_validator_results.csv'))
 
 
 def test_write_results_dataframe_builds_path_input_featureclass(mocker):
@@ -73,4 +73,4 @@ def test_write_results_dataframe_builds_path_input_featureclass(mocker):
     input_path = Path(r'c:\foo\bar.gdb\baz')
     main._write_results_dataframe(input_path, mock_df)
 
-    mock_df.to_csv.assert_called_with(Path(r'c:\foo\baz_results.csv'))
+    mock_df.to_csv.assert_called_with(Path(r'c:\foo\baz_validator_results.csv'))

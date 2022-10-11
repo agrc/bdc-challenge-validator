@@ -37,9 +37,7 @@ setup(
         'Issue Tracker': 'https://github.com/agrc/python/issues',
     },
     keywords=['gis'],
-    install_requires=[
-        # 'package==1.0.*'
-    ],
+    install_requires=['arcgis'],
     extras_require={
         'tests': [
             'pylint-quotes~=0.2',
@@ -58,6 +56,6 @@ setup(
         'pytest-runner',
     ],
     entry_points={'console_scripts': [
-        'validator = validator.main:main',
+        'bdcvalidator = validator.main:main',
     ]},
 )
