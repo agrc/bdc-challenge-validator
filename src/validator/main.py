@@ -48,7 +48,7 @@ def _write_results_dataframe(input_path, combined_dataframe):
     parent = input_path.parent
     if input_path.parent.suffix == '.gdb':
         parent = input_path.parent.parent
-    new_path = parent / f'{input_path.stem}_results.csv'
+    new_path = parent / f'{input_path.stem}_validator_results.csv'
     print(f'Errors detected. Results written to {new_path}')
     combined_dataframe.to_csv(new_path)
 
