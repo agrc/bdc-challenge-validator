@@ -111,8 +111,8 @@ def zip_code_check(row, zip_prefix='84'):
     if row['zip_code'] and row['category_code'] in (3, 4, 5, 6):
         return 'zip_code must be empty for category_codes 3-6'
 
-    pattern = zip_prefix + '[0-9]{3}'
-    if not re.match(pattern, row['zip_code']):
+    pattern = '^' + zip_prefix + '[0-9]{3}$'
+    if row['zip_code'] and not re.match(pattern, row['zip_code']):
         return f'zip_code must in the form {zip_prefix}xyz'
 
     return 'Valid'
@@ -122,7 +122,8 @@ def zip_code_suffix_check(row):
     if row['zip_code_suffix'] and row['category_code'] in (3, 4, 5, 6):
         return 'zip_code_suffix must be empty for category_codes 3-6'
 
-    if not re.match('^[0-9]{4}$', row['zip_code_suffix']) and row['category_code'] not in (3, 4, 5, 6):
+    if row['zip_code_suffix'] and not re.match('^[0-9]{4}$',
+                                               row['zip_code_suffix']) and row['category_code'] not in (3, 4, 5, 6):
         return 'zip_code_suffix must be a four-digit number'
 
     return 'Valid'

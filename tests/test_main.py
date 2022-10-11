@@ -1,3 +1,6 @@
+from pathlib import Path
+
+import numpy as np
 import pandas as pd
 from pandas import testing as tm
 
@@ -36,3 +39,38 @@ def test_all_elements_equal_returns_false_for_all_unique():
     results = main._all_elements_equal(df, 'bar')
 
     assert not results
+
+
+def test_load_data_fills_na_from_csv(mocker):
+    csv_df = pd.DataFrame({
+        'a': ['1', '2'],
+        'b': ['3', np.nan],
+    })
+    mocker.patch('validator.main.pd.read_csv', return_value=csv_df)
+
+    result_df = main._load_data(Path(r'c:\temp\foo.csv'))
+
+    test_df = pd.DataFrame({
+        'a': ['1', '2'],
+        'b': ['3', ''],
+    })
+
+    tm.assert_frame_equal(result_df, test_df)
+
+
+def test_write_results_dataframe_builds_path_input_csv(mocker):
+    mock_df = mocker.Mock()
+
+    input_path = Path(r'c:\foo\bar\baz.csv')
+    main._write_results_dataframe(input_path, mock_df)
+
+    mock_df.to_csv.assert_called_with(Path(r'c:\foo\bar\baz_results.csv'))
+
+
+def test_write_results_dataframe_builds_path_input_featureclass(mocker):
+    mock_df = mocker.Mock()
+
+    input_path = Path(r'c:\foo\bar.gdb\baz')
+    main._write_results_dataframe(input_path, mock_df)
+
+    mock_df.to_csv.assert_called_with(Path(r'c:\foo\baz_results.csv'))

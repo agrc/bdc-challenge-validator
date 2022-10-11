@@ -23,7 +23,7 @@
       "request": "launch",
       "module": "validator.main",
       "args": [
-        "C:\\gis\\Projects\\BroadbandFabric\\working data\\Wayne\\wayne_bad_category_codes.csv"
+        "C:\\gis\\Projects\\BroadbandFabric\\working data\\SLCo\\SLCo_Address_Point_Challenge_Final.csv"
       ],
       "console": "integratedTerminal",
       "justMyCode": true
