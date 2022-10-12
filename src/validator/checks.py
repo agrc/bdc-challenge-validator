@@ -179,8 +179,6 @@ def bsl_lacks_address_flag_check(row):
         return 'bsl_lacks_address_flag must have a value of 0 or 1 for category code 1 or 2'
     if row['bsl_lacks_address_flag'] and row['category_code'] in (3, 4, 5, 6, 7):
         return 'bsl_lacks_address_flag must be empty for category codes 3-7'
-    # if row['bsl_lacks_address_flag'] not in (0, 1):
-    #     return 'bsl_lacks_address_flag must have a value of 0 or 1'
 
     return 'Valid'
 
