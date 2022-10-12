@@ -137,7 +137,6 @@ def process(input_path):
 
 
 def main():
-    print(sys.argv)
     if len(sys.argv) == 1:
         print('Must specify the path to the file to be validated.')
         sys.exit()
