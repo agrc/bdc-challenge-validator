@@ -18,17 +18,6 @@
       "justMyCode": true
     },
     {
-      "name": "Python: validator args",
-      "type": "python",
-      "request": "launch",
-      "module": "validator.main",
-      "args": [
-        "C:\\gis\\Projects\\BroadbandFabric\\working data\\SLCo\\SLCo_Address_Point_Challenge_Final.csv"
-      ],
-      "console": "integratedTerminal",
-      "justMyCode": true
-    },
-    {
       "name": "Debug Tests",
       "type": "python",
       "request": "test",
