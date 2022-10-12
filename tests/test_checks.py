@@ -1,7 +1,6 @@
 import pandas as pd
 from pandas import testing as tm
 
-import validator
 from validator import checks
 
 # def test_category_codes():
