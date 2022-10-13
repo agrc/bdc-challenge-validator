@@ -79,6 +79,8 @@ def process(input_path):
     error = False
     nt = '\n\t'
     matching_message = f'Valid columns:{nt}{nt.join(sorted(matching_cols))}'
+    missing_message = ''
+    extra_message = ''
     if missing_cols:
         error = True
         missing_message = f'Missing required columns:{nt}{nt.join(sorted(missing_cols))}'
@@ -102,28 +104,28 @@ def process(input_path):
         return
 
     _print_header('Checking other columns')
-    columns_to_check = [
-        'contact_name',
-        'contact_email',
-        'contact_phone',
-        'location_id',
-        'address_primary',
-        'city',
-        'state',
-        'zip_code',
-        'zip_code_suffix',
-        'unit_count',
-        'building_type_code',
-        'non_bsl_code',
-        'bsl_lacks_address_flag',
-        'latitude',
-        'longitude',
-    ]
+    columns_to_check = {
+        'contact_name': checks.contact_name_check,
+        'contact_email': checks.contact_email_check,
+        'contact_phone': checks.contact_phone_check,
+        'location_id': checks.location_id_check,
+        'address_primary': checks.address_primary_check,
+        'city': checks.city_check,
+        'state': checks.state_check,
+        'zip_code': checks.zip_code_check,
+        'zip_code_suffix': checks.zip_code_suffix_check,
+        'unit_count': checks.unit_count_check,
+        'building_type_code': checks.building_type_code_check,
+        'non_bsl_code': checks.non_bsl_code_check,
+        'bsl_lacks_address_flag': checks.bsl_lacks_address_flag_check,
+        'latitude': checks.latitude_check,
+        'longitude': checks.longitude_check,
+    }
     results_df = pd.DataFrame()
 
-    for column in columns_to_check:
+    for column, method in columns_to_check.items():
         print(f'{column}...')
-        exec(f'results_df[\'{column}_result\'] = dataframe.apply(checks.{column}_check, axis=1)')
+        results_df[f'{column}_result'] = dataframe.apply(method, axis=1)
 
     _print_header('Results')
 
