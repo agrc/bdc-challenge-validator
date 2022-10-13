@@ -3,4 +3,4 @@
 This must only include a single line: __version__ = 'x.y.z'
 """
 
-__version__ = '1.0.1'
+__version__ = '1.1.0'
