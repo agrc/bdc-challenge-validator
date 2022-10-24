@@ -212,12 +212,12 @@ def test_address_primary_check():
     # yapf: disable
     rows = [
         {'address_primary': '', 'category_code': 7},
-        {'address_primary': '', 'category_code': 2, 'bsl_lacks_address_flag': 0},
-        {'address_primary': '', 'category_code': 2, 'bsl_lacks_address_flag': 1},
+        {'address_primary': '', 'category_code': 2, 'bsl_lacks_address_flag': '0'},
+        {'address_primary': '', 'category_code': 2, 'bsl_lacks_address_flag': '1'},
         {'address_primary': '', 'category_code': 3},
         {'address_primary': 'addr', 'category_code': 3},
-        {'address_primary': 'addr', 'category_code': 2, 'bsl_lacks_address_flag': 1},
-        {'address_primary': 'addr', 'category_code': 2, 'bsl_lacks_address_flag': 0},
+        {'address_primary': 'addr', 'category_code': 2, 'bsl_lacks_address_flag': '1'},
+        {'address_primary': 'addr', 'category_code': 2, 'bsl_lacks_address_flag': '0'},
         {'address_primary': 'addr', 'category_code': 7},
     ]
     # yapf: enable
@@ -296,12 +296,12 @@ def test_zip_check():
     # yapf: disable
     rows = [
         {'zip_code': '', 'category_code': 7},
-        {'zip_code': '', 'category_code': 2, 'bsl_lacks_address_flag': 0},
-        {'zip_code': '', 'category_code': 2, 'bsl_lacks_address_flag': 1},
+        {'zip_code': '', 'category_code': 2, 'bsl_lacks_address_flag': '0'},
+        {'zip_code': '', 'category_code': 2, 'bsl_lacks_address_flag': '1'},
         {'zip_code': '', 'category_code': 3},
         {'zip_code': '84093', 'category_code': 3},
-        {'zip_code': '84093', 'category_code': 2, 'bsl_lacks_address_flag': 1},
-        {'zip_code': '84093', 'category_code': 2, 'bsl_lacks_address_flag': 0},
+        {'zip_code': '84093', 'category_code': 2, 'bsl_lacks_address_flag': '1'},
+        {'zip_code': '84093', 'category_code': 2, 'bsl_lacks_address_flag': '0'},
         {'zip_code': '84093', 'category_code': 7},
         {'zip_code': '840932', 'category_code': 7},
         {'zip_code': '8409', 'category_code': 7},
