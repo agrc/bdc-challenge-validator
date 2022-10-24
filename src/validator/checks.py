@@ -86,13 +86,13 @@ def address_primary_check(row):
     if not row['address_primary']:
         if row['category_code'] == 7:
             return 'address_primary required for category_code 7'
-        if row['category_code'] in (1, 2) and row['bsl_lacks_address_flag'] == 0:
+        if row['category_code'] in (1, 2) and row['bsl_lacks_address_flag'] == '0':
             return 'address_primary required for category codes 1 or 2 with bsl_lacks_address_flag set to 0'
 
     if row['address_primary']:
         if row['category_code'] in (3, 4, 5, 6):
             return 'address_primary must be empty for category_codes 3-6'
-        if row['category_code'] in (1, 2) and row['bsl_lacks_address_flag'] == 1:
+        if row['category_code'] in (1, 2) and row['bsl_lacks_address_flag'] == '1':
             return 'address_primary must be empty for category codes 1 or 2 with bsl_lacks_address_flag set to 1'
 
     return 'Valid'
@@ -123,7 +123,7 @@ def zip_code_check(row, zip_prefix='84'):
     if not row['zip_code']:
         if row['category_code'] == 7:
             return 'zip_code required for category_code 7'
-        if row['category_code'] in (1, 2) and row['bsl_lacks_address_flag'] == 0:
+        if row['category_code'] in (1, 2) and row['bsl_lacks_address_flag'] == '0':
             return 'zip_code required for category codes 1 or 2 with bsl_lacks_address_flag set to 0'
 
     if row['zip_code'] and row['category_code'] in (3, 4, 5, 6):
