@@ -1,6 +1,6 @@
 # UGRC BDC Validator
 
-![Build Status](https://github.com/agrc/bdc-challenge-validator/workflows/Build%20and%20Test/badge.svg)
+![Build Status](https://github.com/agrc/bdc-challenge-validator/workflows/Push%20Events/badge.svg)
 [![codecov](https://codecov.io/gh/agrc/bdc-challenge-validator/branch/main/graph/badge.svg)](https://codecov.io/gh/agrc/bdc-challenge-validator)
 
 A program for validating files prior to submission to the FCC's bulk data challenge portal. It makes sure the proper fields are populated or left blank and that certain fields are formatted correctly based on the FCC's [Bulk Fabric Challenge Data Matrix](https://help.bdc.fcc.gov/hc/en-us/articles/8103937932443-Bulk-Fabric-Challenge-Data-Matrix) and [formatting guide](https://help.bdc.fcc.gov/hc/en-us/articles/8103890293275-How-to-Format-a-Bulk-Fabric-Challenge) as of September 2022.
