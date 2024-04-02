@@ -41,14 +41,14 @@ setup(
     extras_require={
         'tests': [
             'pylint-quotes~=0.2',
-            'pylint~=2.11',
-            'pytest-cov>=3,<5',
+            'pylint>=2.11,<4.0',
+            'pytest-cov>=3,<6',
             'pytest-instafail~=0.4',
-            'pytest-isort>=2,<4',
+            'pytest-isort>=2,<5',
             'pytest-mock~=3.8',
             'pytest-pylint~=0.18',
             'pytest-watch~=4.2',
-            'pytest>=6,<8',
+            'pytest>=6,<9',
             'yapf~=0.31',
         ]
     },
